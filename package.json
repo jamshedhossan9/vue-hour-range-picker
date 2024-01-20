@@ -16,7 +16,7 @@
       },
       "types": "./dist/index.d.ts",
       "scripts": {
-        "dev": "vite --host",
+        "dev": "vite",
         "build": "vite build && vue-tsc --emitDeclarationOnly",
         "types": "vue-tsc ",
         "preview": "vite preview"
