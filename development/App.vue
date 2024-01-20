@@ -2,11 +2,54 @@
 
 <template>
     <div class="container p-3">
-        <h3 class="title-1 mb-2">Vue Hour Range Picker</h3>
-        <div class="row g-5">
-            <div class="col border-end">
+        
+        <div class="row g-5 g-sm-3 g-md-5 flex-nowrap document">
+            <div class="left-column col-auto" :class="{'sidebar-open': sideBarOpen}">
+                <div class="backdrop" @click.prevent="sideBarOpen = !sideBarOpen"></div>
+                <div class="d-flex flex-column sidebar-menu">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" @click.prevent="goTo($event, sectionIntroduction)">Introduction</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionImport)">Import</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionBasic)">Basic</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionCustomColor)">Custom Color</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionCustomColorDark)">Dark</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionResponsive)">Responsive</a>
+                        </li>
+                        <li class="nav-item mt-4">
+                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionProps)">Props</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionEmits)">Emits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionTypes)">Types</a>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+            <div class="right-column col" ref="sectionIntroduction" :style="{minWidth: '1px'}">
+                <div class="mb-2 d-flex gap-3 align-items-center" >
+                    <a href="#" class="menu-toggle" @click.prevent="sideBarOpen = !sideBarOpen">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                    </a>
+                    <h3 class="title-1 m-0 flex-grow-1">Vue Hour Range Picker</h3>
+                </div>
                 <div class="d-flex flex-column">
-                    <div class="py-4 border-bottom" ref="sectionIntroduction">
+                    <div class="py-4 border-bottom">
                         <strong>vue-hour-range-picker</strong> is a Vue component which lets you select hours in weekly timeframe. 
                         Select and drag the mouse from starting to end hour block. 
                         It works with touch devices also and fully responsive. 
@@ -144,195 +187,169 @@
                     </div>
                     <div class="py-4 border-bottom" ref="sectionProps">
                         <h5 class="title-2 mb-2">Props:</h5>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Default</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>modelValue</td>
-                                    <td>HourRangePickerType</td>
-                                    <td>null</td>
-                                    <td>
-                                        <div>Value of the component.</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>labelColor</td>
-                                    <td>String</td>
-                                    <td>#000000</td>
-                                    <td>
-                                        <div>Label color for selected Hour and Day.</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>labelMutedColor</td>
-                                    <td>String</td>
-                                    <td>#999999</td>
-                                    <td>
-                                        <div>Label color for unselected Hour and Day.</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>blockColor</td>
-                                    <td>String</td>
-                                    <td>#2e2e2e</td>
-                                    <td>
-                                        <div>Background color of Hour blocks.</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>borderColor</td>
-                                    <td>String</td>
-                                    <td>#eeeeee</td>
-                                    <td>
-                                        <div>Border color of Grids.</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>borderWidth</td>
-                                    <td>String</td>
-                                    <td>1px</td>
-                                    <td>
-                                        <div>Border width of Grids. CSS suppoerted unit for border-width.</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>rounded</td>
-                                    <td>String</td>
-                                    <td>0px</td>
-                                    <td>
-                                        <div>Border radius for whole component. CSS supported unit for border-radius.</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>clearIconColor</td>
-                                    <td>String</td>
-                                    <td>#aaaaaa</td>
-                                    <td>
-                                        <div>Color of Clear Icon.</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>fontSize</td>
-                                    <td>String</td>
-                                    <td>null</td>
-                                    <td>
-                                        <div>CSS supported font-size. If not present, it will auto render font size based on grid size.</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>disabled</td>
-                                    <td>Boolean</td>
-                                    <td>false</td>
-                                    <td>
-                                        <div>When present, it specifies that the component should be disabled.</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>addNote</td>
-                                    <td>Boolean</td>
-                                    <td>true</td>
-                                    <td>
-                                        <div>Used to pass a note describing how to unselect a selected range.</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>notePosition</td>
-                                    <td>'left' | 'center' | 'right'</td>
-                                    <td>left</td>
-                                    <td>
-                                        <div>Horizontal position of the note.</div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Default</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>modelValue</td>
+                                        <td>HourRangePickerType</td>
+                                        <td>null</td>
+                                        <td>
+                                            <div>Value of the component.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>labelColor</td>
+                                        <td>String</td>
+                                        <td>#000000</td>
+                                        <td>
+                                            <div>Label color for selected Hour and Day.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>labelMutedColor</td>
+                                        <td>String</td>
+                                        <td>#999999</td>
+                                        <td>
+                                            <div>Label color for unselected Hour and Day.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>blockColor</td>
+                                        <td>String</td>
+                                        <td>#2e2e2e</td>
+                                        <td>
+                                            <div>Background color of Hour blocks.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>borderColor</td>
+                                        <td>String</td>
+                                        <td>#eeeeee</td>
+                                        <td>
+                                            <div>Border color of Grids.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>borderWidth</td>
+                                        <td>String</td>
+                                        <td>1px</td>
+                                        <td>
+                                            <div>Border width of Grids. CSS suppoerted unit for border-width.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>rounded</td>
+                                        <td>String</td>
+                                        <td>0px</td>
+                                        <td>
+                                            <div>Border radius for whole component. CSS supported unit for border-radius.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>clearIconColor</td>
+                                        <td>String</td>
+                                        <td>#aaaaaa</td>
+                                        <td>
+                                            <div>Color of Clear Icon.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>fontSize</td>
+                                        <td>String</td>
+                                        <td>null</td>
+                                        <td>
+                                            <div>CSS supported font-size. If not present, it will auto render font size based on grid size.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>disabled</td>
+                                        <td>Boolean</td>
+                                        <td>false</td>
+                                        <td>
+                                            <div>When present, it specifies that the component should be disabled.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>addNote</td>
+                                        <td>Boolean</td>
+                                        <td>true</td>
+                                        <td>
+                                            <div>Used to pass a note describing how to unselect a selected range.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>notePosition</td>
+                                        <td>'left' | 'center' | 'right'</td>
+                                        <td>left</td>
+                                        <td>
+                                            <div>Horizontal position of the note.</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="py-4 border-bottom" ref="sectionEmits">
                         <h5 class="title-2 mb-2">Emits:</h5>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Parameters</th>
-                                    <th>ReturnType</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>update:modelValue</td>
-                                    <td>value: HourRangePickerType</td>
-                                    <td>void</td>
-                                    <td>
-                                        <div>Emitted when the value changes.</div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Parameters</th>
+                                        <th>ReturnType</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>update:modelValue</td>
+                                        <td>value: HourRangePickerType</td>
+                                        <td>void</td>
+                                        <td>
+                                            <div>Emitted when the value changes.</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="py-4 border-bottom" ref="sectionTypes">
                         <h5 class="title-2 mb-2">Emits:</h5>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>HourRangePickerType</td>
-                                    <td>
-                                        <div>Type of modelValue.</div>
-                                        <div>
-                                            import { type HourRangePickerType } from 'vue-hour-range-picker'
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>HourRangePickerType</td>
+                                        <td>
+                                            <div>Type of modelValue.</div>
+                                            <div>
+                                                import { type HourRangePickerType } from 'vue-hour-range-picker'
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-auto" :style="{width:'200px'}">
-                <div class="d-flex flex-column sidebar-menu">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#" @click.prevent="goTo($event, sectionIntroduction)">Introduction</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionImport)">Import</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionBasic)">Basic</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionCustomColor)">Custom Color</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionCustomColorDark)">Dark</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionResponsive)">Responsive</a>
-                        </li>
-                        <li class="nav-item mt-4">
-                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionProps)">Props</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionEmits)">Emits</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionTypes)">Types</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            
         </div>
         
         
@@ -346,6 +363,7 @@
     import type { HourRangePickerType } from '../src/types/HourRangePickerType'
     import './style.scss'
 
+    const sideBarOpen = ref(false);
     const sectionIntroduction = ref();
     const sectionImport = ref();
     const sectionBasic = ref();
@@ -370,6 +388,7 @@
             top: el.offsetTop,
             behavior: 'smooth',
         })
+        sideBarOpen.value = false;
     }
 
     let sectionImportHtml = `import { HourRangePicker, type HourRangePickerType } from 'vue-hour-range-picker'
