@@ -12,7 +12,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base: '/',
+  base: '/vue-hour-range-picker/',
   build: {
     lib: {
       // src/indext.ts is where we have exported the component(s)
