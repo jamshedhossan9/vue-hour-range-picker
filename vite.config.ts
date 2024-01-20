@@ -17,6 +17,7 @@ export default defineConfig({
     }
   },
   base: '/vue-hour-range-picker/',
+  publicDir: 'assets',
   build: {
     lib: {
       // src/indext.ts is where we have exported the component(s)
@@ -26,6 +27,9 @@ export default defineConfig({
       fileName: "hour-range-picker",
     },
     rollupOptions: {
+        input: {
+            main: resolve(__dirname, 'index.html'),
+          },
       // make sure to externalize deps that shouldn't be bundled
       // into your library
       external: ["vue"],

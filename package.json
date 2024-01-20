@@ -2,32 +2,37 @@
     "name": "vue-hour-range-picker",
     "private": false,
     "version": "0.0.0",
+    "homepage": "https://jamshedhossan9.github.io/vue-hour-range-picker/",
     "type": "module",
-    "files": ["dist"],
+    "files": [
+        "dist"
+    ],
     "main": "./dist/hour-range-picker.umd.cjs",
     "module": "./dist/hour-range-picker.js",
     "exports": {
         ".": {
-          "types": "./dist/index.d.ts",
-          "import": "./dist/hour-range-picker.js",
-          "require": "./dist/hour-range-picker.umd.cjs"
+            "types": "./dist/index.d.ts",
+            "import": "./dist/hour-range-picker.js",
+            "require": "./dist/hour-range-picker.umd.cjs"
         },
         "./style.css": "./dist/style.css"
-      },
-      "types": "./dist/index.d.ts",
-      "scripts": {
+    },
+    "types": "./dist/index.d.ts",
+    "scripts": {
         "dev": "vite",
         "build": "vite build && vue-tsc --emitDeclarationOnly",
         "types": "vue-tsc ",
-        "preview": "vite preview"
-      },
+        "preview": "vite preview",
+        "deploy" : "gh-pages -d doc"
+    },
     "dependencies": {
-        "vue": "^3.3.11",
-        "sass": "^1.62.1"
+        "sass": "^1.62.1",
+        "vue": "^3.3.11"
     },
     "devDependencies": {
         "@types/node": "^20.2.5",
         "@vitejs/plugin-vue": "^4.5.2",
+        "gh-pages": "^6.1.1",
         "typescript": "^5.2.2",
         "vite": "^5.0.8",
         "vue-tsc": "^1.8.25"
