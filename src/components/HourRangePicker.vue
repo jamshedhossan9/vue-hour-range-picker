@@ -20,7 +20,7 @@
                 <tr>
                     <td :style="cellStyle(0, 0)" ref="firstCell" class="clear-icon-cell">
                         <span class="clear-icon" v-if="!props.disabled" :style="{color: props.clearIconColor}">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="svg-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="svg-icon">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
                         </span>
@@ -66,6 +66,8 @@
             <small class="note" :style="{
                 display: 'block',
                 textAlign: props.notePosition as 'left' | 'center' | 'right',
+                paddingTop: '5px',
+                color: props.labelMutedColor
             }">
                 Note: To uncheck a range, you have to keep all block already checked within that range.
             </small>
@@ -122,7 +124,7 @@ const props = defineProps({
     },
     blockColor:{
         type: String,
-        default: '#000000',
+        default: '#2e2e2e',
     },
     borderColor:{
         type: String,
@@ -130,11 +132,11 @@ const props = defineProps({
     },
     borderWidth:{
         type: String,
-        default: '2px',
+        default: '1px',
     },
     rounded:{
         type: String,
-        default: '2px',
+        default: '0px',
     },
     clearIconColor:{
         type: String,
@@ -143,6 +145,10 @@ const props = defineProps({
     disabled:{
         type: Boolean,
         default: false,
+    },
+    fontSize:{
+        type: String,
+        default: null
     }
 })
 
@@ -308,20 +314,46 @@ const fontSize = ref('100%');
 const borderWidth = ref(props.borderWidth);
 
 const onResize = () => {
+    if(props.fontSize){
+        fontSize.value = props.fontSize;
+    }
     if(firstCell.value){
         let width: number = firstCell.value.offsetWidth;
-        console.log(width)
-        let tempFontSize = Math.max(width/3, 4);
-        fontSize.value = `${tempFontSize}px`;
+        // console.log(width)
         if(width > 30){
             borderWidth.value = props.borderWidth;
         }
         else{
             borderWidth.value = '1px';
         }
+        if(!props.fontSize){
+            let tempFontSize = 4;
+            // tempFontSize = width - 3;
+            if(width > 10){
+                tempFontSize = 5;
+            }
+            if(width > 16){
+                tempFontSize = 6;
+            }
+            if(width > 24){
+                tempFontSize = 9;
+            }
+            if(width > 30){
+                tempFontSize = 11;
+            }
+            if(width > 35){
+                tempFontSize = 12;
+            }
+            if(width > 40){
+                tempFontSize = 14;
+            }
+            fontSize.value = `${tempFontSize}px`;
+        }
     }
     else{
-        fontSize.value = '100%';
+        if(!props.fontSize){
+            fontSize.value = '100%';
+        }
     }
 }
 window.addEventListener('resize', onResize)
@@ -543,7 +575,7 @@ const mouseMoveHandler = (event: any) => {
         width: 100%;
         border-spacing: 0px;
         border-collapse: separate;
-        font-size: 100%;
+        font-size: 14px;
 
         $borderWidth: 2px;
         $borderRadius: 0.375rem;
@@ -608,6 +640,7 @@ const mouseMoveHandler = (event: any) => {
                 top: 50%;
                 left: 50%;
                 transform: translateX(-50%) translateY(-50%);
+                line-height: 1;
             }
             &.hour-muted {
                 color: #999;
@@ -624,6 +657,7 @@ const mouseMoveHandler = (event: any) => {
                 top: 50%;
                 left: 50%;
                 transform: translateX(-50%) translateY(-50%);
+                line-height: 1;
             }
             &.day-muted {
                 color: #999;
@@ -632,7 +666,7 @@ const mouseMoveHandler = (event: any) => {
         .clear-icon-cell{
             position: relative;
             .clear-icon {
-                opacity: 0.4;
+                opacity: 0.5;
                 cursor: pointer;
                 transition: 0.1s ease-in;
                 &:hover {

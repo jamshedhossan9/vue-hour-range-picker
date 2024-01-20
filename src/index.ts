@@ -1,5 +1,3 @@
-import VueWeeklyHourGrid from './components/VueWeeklyHourGrid.vue'
-// import type { DayType, WeekType, VueWeeklyHourGridValue } from './types/VueWeeklyHourGridType'
-
-// export { VueWeeklyHourGrid, DayType, WeekType, VueWeeklyHourGridValue };
-export default VueWeeklyHourGrid;
+import HourRangePicker from './components/HourRangePicker.vue'
+import type { WeekType, HourRangePickerType } from './types/HourRangePickerType'
+export { HourRangePicker, WeekType, HourRangePickerType };
