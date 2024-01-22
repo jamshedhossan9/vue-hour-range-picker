@@ -74,21 +74,9 @@
         </div>
     </div>
 </template>
+
 <script setup lang="ts">
-/*
-{
-    'monday': {
-        '0': true,
-        '5': true
-    }
-}
-[
-    [ false, false, true, true, ...//24 times], 
-    ...
-    ...
-    7 times
-]
-*/
+
 import { ref, onMounted, watch } from 'vue'
 import type { PropType } from 'vue'
 import type { WeekType, HourRangePickerType } from '../types/HourRangePickerType'
@@ -99,10 +87,10 @@ const props = defineProps({
         type: Object as PropType<HourRangePickerType>,
         default: null
     },
-    weekdays: {
-        type: Object as PropType<WeekType>,
-        default: null
-    },
+    // weekdays: {
+    //     type: Object as PropType<WeekType>,
+    //     default: null
+    // },
     addNote: {
         type: Boolean,
         default: true
@@ -346,33 +334,33 @@ const resize = () => {
         
         if(!props.fontSize){
             let tempFontSize = 4;
-            // tempFontSize = width - 3;
-            if(width > 250){
-                tempFontSize = 5;
-            }
-            if(width > 300){
-                tempFontSize = 6;
-            }
-            if(width > 400){
-                tempFontSize = 7;
-            }
-            if(width > 500){
-                tempFontSize = 8;
-            }
-            if(width > 600){
-                tempFontSize = 9;
-            }
-            if(width > 700){
-                tempFontSize = 10;
-            }
-            if(width > 800){
-                tempFontSize = 11;
-            }
-            if(width > 900){
-                tempFontSize = 12;
-            }
+            
             if(width > 1000){
                 tempFontSize = 14;
+            }
+            else if(width > 900){
+                tempFontSize = 12;
+            }
+            else if(width > 800){
+                tempFontSize = 11;
+            }
+            else if(width > 700){
+                tempFontSize = 10;
+            }
+            else if(width > 600){
+                tempFontSize = 9;
+            }
+            else if(width > 500){
+                tempFontSize = 8;
+            }
+            else if(width > 400){
+                tempFontSize = 7;
+            }
+            else if(width > 300){
+                tempFontSize = 6;
+            }
+            else if(width > 250){
+                tempFontSize = 5;
             }
             fontSize.value = `${tempFontSize}px`;
         }
@@ -426,7 +414,6 @@ const labelStyle = (muted: boolean = false) => {
 }
 
 const clearTable = () => {
-    // alert('here')
     let changed: HourRangePickerType = { ...props.modelValue };
     for(let i in changed){
         if(changed.hasOwnProperty(i)){

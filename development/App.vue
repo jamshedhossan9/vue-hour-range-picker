@@ -48,7 +48,7 @@
                 
             </div>
             <div class="right-column col" ref="sectionIntroduction" :style="{minWidth: '1px'}">
-                <div class="mb-2 d-flex gap-2 align-items-center flex-wrap" >
+                <div class="mb-2 d-flex gap-3 align-items-center flex-wrap" >
                     <a href="#" class="menu-toggle" @click.prevent="sideBarOpen = !sideBarOpen">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -168,8 +168,8 @@
                             <div class="flex-none d-flex align-items-center gap-4">
                                 <div>
                                     <label for="">
-                                        <input class="form-check-input" type="checkbox" v-model="autoResize" @input="componentResponsive.resize();">
-                                        <span class="ps-1" @click="autoResize = !autoResize; componentResponsive.resize();">Auto Resize</span>
+                                        <input class="form-check-input" type="checkbox" v-model="autoScale" @input="componentResponsive.resize();">
+                                        <span class="ps-1" @click="autoScale = !autoScale; componentResponsive.resize();">Auto Scale</span>
                                     </label>
                                 </div>
                             </div>
@@ -185,7 +185,7 @@
                             You have to use <strong>resize()</strong> method to re-render the component when its width changes without <strong>Window resize</strong> event.
                         </div>
                         <div class="pt-3">
-                            <div class="fs-6 pb-1 fw-bold">Usage:</div>
+                            <div class="fs-6 pb-1 fw-bold">Example:</div>
                             <pre class="code-block">{{ sectionResponsiveHtml }}</pre>
                         </div>
                     </div>
@@ -582,8 +582,8 @@ js:
 `;
     let sectionResponsiveHtml = `html:
     <label>
-        <input type="checkbox" v-model="autoResize" @input="componentResponsive.resize();"> 
-        <span @click="autoResize = !autoResize; componentResponsive.resize();">Auto Resize</span>
+        <input type="checkbox" v-model="autoScale" @input="componentResponsive.resize();"> 
+        <span @click="autoScale = !autoScale; componentResponsive.resize();">Auto Scale</span>
     </label>
     <div ref="sectionResponsiveResizer">
         <HourRangePicker 
@@ -600,9 +600,9 @@ js:
     import { useResizeObserver } from '@vueuse/core';
     
     const sectionResponsiveResizer = ref();
-    const autoResize = ref(true);
+    const autoScale = ref(true);
     useResizeObserver(sectionResponsiveResizer, (entries) => {
-        if(componentResponsive.value && autoResize.value){
+        if(componentResponsive.value && autoScale.value){
             componentResponsive.value.resize();
         }
     })
@@ -686,11 +686,11 @@ js:
         }
     };
 
-    const autoResize = ref(true);
+    const autoScale = ref(true);
     useResizeObserver(sectionResponsiveResizer, (entries) => {
         const entry = entries[0]
         const { width, height } = entry.contentRect
-        if(componentResponsive.value && autoResize.value){
+        if(componentResponsive.value && autoScale.value){
             componentResponsive.value.resize();
         }
     })
