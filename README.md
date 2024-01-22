@@ -1,6 +1,6 @@
 # Vue Hour Range Picker
 
-**vue-hour-range-picker** is a Vue component which lets you select hours in weekly timeframe. Select and drag the mouse from starting to end hour block. It works with touch devices also and fully responsive.
+**vue-hour-range-picker** is a Vue component which lets you select hour ranges in weekly timeframe. Select and drag the mouse from starting to end hour block. It works with touch devices also and fully responsive.
 
 It is currently compatible with **Vue3** only.
 

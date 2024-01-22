@@ -58,7 +58,7 @@
                 </div>
                 <div class="d-flex flex-column">
                     <div class="py-4 border-bottom">
-                        <strong>vue-hour-range-picker</strong> is a Vue component which lets you select hours in weekly timeframe. 
+                        <strong>vue-hour-range-picker</strong> is a Vue component which lets you select hour ranges in weekly timeframe. 
                         Select and drag the mouse from starting to end hour block. 
                         It works with touch devices also and fully responsive. 
                         <br>
