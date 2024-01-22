@@ -381,7 +381,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="py-4 pb-5" ref="sectionTypes">
+                    <div class="py-4 border-bottom" ref="sectionTypes">
                         <h5 class="title-2 mb-2">Types:</h5>
                         <div class="table-responsive">
                             <table class="table table-bordered">
@@ -404,6 +404,10 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div class="pt-5 pb-3">
+                        <div>Released under the MIT License.</div>
+                        <div>Copyright (C) 2024 - Jamshed Hossan</div>
                     </div>
                 </div>
             </div>
