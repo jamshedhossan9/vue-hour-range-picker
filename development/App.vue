@@ -17,6 +17,9 @@
                             <a class="nav-link active" href="#" @click.prevent="goTo($event, sectionIntroduction)">Introduction</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionInstall)">Installation</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#" @click.prevent="goTo($event, sectionImport)">Import</a>
                         </li>
                         <li class="nav-item">
@@ -64,6 +67,12 @@
                         <br>
                         <br>
                         It is currently compatible with <strong>Vue3</strong> only.
+                    </div>
+                    <div class="py-4 border-bottom" ref="sectionInstall">
+                        <h5 class="title-2 mb-2">Installation:</h5>
+                        <div>
+                            <pre class="code-block">npm install vue-hour-range-picker</pre>
+                        </div>
                     </div>
                     <div class="py-4 border-bottom" ref="sectionImport">
                         <h5 class="title-2 mb-2">Import:</h5>
@@ -427,6 +436,7 @@
     import { useResizeObserver } from '@vueuse/core'
 
     const sideBarOpen = ref(false);
+    const sectionInstall = ref();
     const sectionIntroduction = ref();
     const sectionImport = ref();
     const sectionBasic = ref();
