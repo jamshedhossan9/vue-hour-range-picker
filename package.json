@@ -11,7 +11,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/jamshedhossan9/vue-hour-range-picker.git"
+        "url": "git+https://github.com/jamshedhossan9/vue-hour-range-picker.git"
     },
     "files": [
         "dist",
