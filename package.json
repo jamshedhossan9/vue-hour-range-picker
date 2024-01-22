@@ -1,7 +1,7 @@
 {
     "name": "vue-hour-range-picker",
     "private": false,
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A Vue3 component to select hour ranges in weekly timeframe",
     "homepage": "https://jamshedhossan9.github.io/vue-hour-range-picker/",
     "type": "module",
