@@ -32,7 +32,8 @@
         "dev": "vite --host",
         "doc:build": "vite build --config vite-doc.config.js",
         "build": "vite build && vue-tsc --emitDeclarationOnly",
-        "types": "vue-tsc "
+        "types": "vue-tsc ",
+        "test": "echo \"No test specified\""
     },
     "dependencies": {
         "vue": "^3.3.11"
