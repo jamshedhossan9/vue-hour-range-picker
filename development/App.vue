@@ -9,6 +9,11 @@
                 <div class="d-flex flex-column sidebar-menu">
                     <ul class="nav flex-column">
                         <li class="nav-item">
+                            <a href="https://github.com/jamshedhossan9/vue-hour-range-picker" target="_blank" class="nav-link">
+                                Github <small>&#8599;</small>
+                            </a>
+                        </li>
+                        <li class="nav-item mt-2">
                             <a class="nav-link active" href="#" @click.prevent="goTo($event, sectionIntroduction)">Introduction</a>
                         </li>
                         <li class="nav-item">
@@ -43,18 +48,13 @@
                 
             </div>
             <div class="right-column col" ref="sectionIntroduction" :style="{minWidth: '1px'}">
-                <div class="mb-2 d-flex gap-3 align-items-center flex-wrap" >
+                <div class="mb-2 d-flex gap-2 align-items-center flex-wrap" >
                     <a href="#" class="menu-toggle" @click.prevent="sideBarOpen = !sideBarOpen">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
                     </a>
-                    <h3 class="title-1 m-0 flex-grow-1">Vue Hour Range Picker</h3>
-                    <div class="flex-none">
-                        <a href="https://github.com/jamshedhossan9/vue-hour-range-picker" target="_blank" class="external-link">
-                            Github <small>&#8599;</small>
-                        </a>
-                    </div>
+                    <h3 class="fs-4 m-0 flex-grow-1">Vue Hour Range Picker</h3>
                 </div>
                 <div class="d-flex flex-column">
                     <div class="py-4 border-bottom">
