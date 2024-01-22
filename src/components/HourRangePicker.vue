@@ -491,8 +491,8 @@ const checkOperation = (xy1param: any, xy2param: any) => {
 }
 
 const highlightOperation = (xy1param: any = null, xy2param: any = null) => {
-    let xy1 = null,
-        xy2 = null
+    let xy1: any = null,
+        xy2: any = null
     if (xy1param && xy2param) {
         xy1 = {
             i: Math.min(xy1param.i, xy2param.i),
