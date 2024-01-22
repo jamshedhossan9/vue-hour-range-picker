@@ -13,6 +13,11 @@
                                 Github <small>&#8599;</small>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="https://www.npmjs.com/package/vue-hour-range-picker" target="_blank" class="nav-link">
+                                NPM <small>&#8599;</small>
+                            </a>
+                        </li>
                         <li class="nav-item mt-2">
                             <a class="nav-link active" href="#" @click.prevent="goTo($event, sectionIntroduction)">Introduction</a>
                         </li>
