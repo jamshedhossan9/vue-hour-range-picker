@@ -1,7 +1,6 @@
 type DayType = {
     key: string,
     name: string,
-    muted: boolean
 }
 
 type WeekType = DayType[]

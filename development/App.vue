@@ -33,6 +33,9 @@
                             <a class="nav-link" href="#" @click.prevent="goTo($event, sectionEmits)">Emits</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#" @click.prevent="goTo($event, sectionMethods)">Methods</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#" @click.prevent="goTo($event, sectionTypes)">Types</a>
                         </li>
                     </ul>
@@ -40,13 +43,18 @@
                 
             </div>
             <div class="right-column col" ref="sectionIntroduction" :style="{minWidth: '1px'}">
-                <div class="mb-2 d-flex gap-3 align-items-center" >
+                <div class="mb-2 d-flex gap-3 align-items-center flex-wrap" >
                     <a href="#" class="menu-toggle" @click.prevent="sideBarOpen = !sideBarOpen">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
                     </a>
                     <h3 class="title-1 m-0 flex-grow-1">Vue Hour Range Picker</h3>
+                    <div class="flex-none">
+                        <a href="https://github.com/jamshedhossan9/vue-hour-range-picker" target="_blank" class="external-link">
+                            Github <small>&#8599;</small>
+                        </a>
+                    </div>
                 </div>
                 <div class="d-flex flex-column">
                     <div class="py-4 border-bottom">
@@ -54,7 +62,8 @@
                         Select and drag the mouse from starting to end hour block. 
                         It works with touch devices also and fully responsive. 
                         <br>
-                        Its currently compatible with Vue3 only.
+                        <br>
+                        It is currently compatible with <strong>Vue3</strong> only.
                     </div>
                     <div class="py-4 border-bottom" ref="sectionImport">
                         <h5 class="title-2 mb-2">Import:</h5>
@@ -88,6 +97,9 @@
                                 v-model="value1" 
                                 :disabled="value1Disabled"
                                 :add-note="value1Note"
+                                @update:modelValue="updated"
+                                @selected="selected"
+                                @unselected="unselected"
                             >
                             </HourRangePicker>
                         </div>
@@ -116,6 +128,9 @@
                                 labelMutedColor="#afbbbb" 
                                 borderWidth="2px"
                                 rounded=".5rem"
+                                @update:modelValue="updated"
+                                @selected="selected"
+                                @unselected="unselected"
                                 clear-icon-color="#457d7d">
                             </HourRangePicker>
                         </div>
@@ -146,43 +161,32 @@
                         </div>
                     </div>
                     <div class="py-4 border-bottom" ref="sectionResponsive">
-                        <h5 class="title-2 mb-2">Responsive:</h5>
-                        <div class="d-flex flex-column gap-3">
-                            <div>
-                                <div class="hour-range-picker-test" :style="{maxWidth:'300px'}">
-                                    <HourRangePicker :add-note="false"></HourRangePicker>
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <h5 class="title-2 mb-2">Responsive:</h5>
+                            </div>
+                            <div class="flex-none d-flex align-items-center gap-4">
+                                <div>
+                                    <label for="">
+                                        <input class="form-check-input" type="checkbox" v-model="autoResize" @input="componentResponsive.resize();">
+                                        <span class="ps-1" @click="autoResize = !autoResize; componentResponsive.resize();">Auto Resize</span>
+                                    </label>
                                 </div>
                             </div>
-                            <div>
-                                <div class="hour-range-picker-test" :style="{maxWidth:'50%'}">
-                                    <HourRangePicker :add-note="false"></HourRangePicker>
+                        </div>
+                        <div class="">
+                                <div class="hour-range-picker-test hour-range-picker-test-resizable"  ref="sectionResponsiveResizer">
+                                    <HourRangePicker :add-note="false" borderWidth="4px" rounded="10px" ref="componentResponsive"></HourRangePicker>
                                 </div>
-                            </div>
-                            <div>
-                                <div class="hour-range-picker-test" :style="{maxWidth:'60%'}">
-                                    <HourRangePicker :add-note="false"></HourRangePicker>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="hour-range-picker-test" :style="{maxWidth:'70%'}">
-                                    <HourRangePicker :add-note="false"></HourRangePicker>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="hour-range-picker-test" :style="{maxWidth:'80%'}">
-                                    <HourRangePicker :add-note="false"></HourRangePicker>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="hour-range-picker-test" :style="{maxWidth:'90%'}">
-                                    <HourRangePicker :add-note="false"></HourRangePicker>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="hour-range-picker-test" :style="{maxWidth:'100%'}">
-                                    <HourRangePicker :add-note="false"></HourRangePicker>
-                                </div>
-                            </div>
+                        </div>
+                        <div class="pt-3">
+                            The component is inside a resizeable element. Try to resize it to see the responsiveness without <strong>Window resize</strong> event.
+                            <br>
+                            You have to use <strong>resize()</strong> method to re-render the component when its width changes without <strong>Window resize</strong> event.
+                        </div>
+                        <div class="pt-3">
+                            <div class="fs-6 pb-1 fw-bold">Usage:</div>
+                            <pre class="code-block">{{ sectionResponsiveHtml }}</pre>
                         </div>
                     </div>
                     <div class="py-4 border-bottom" ref="sectionProps">
@@ -200,7 +204,7 @@
                                 <tbody>
                                     <tr>
                                         <td>modelValue</td>
-                                        <td>HourRangePickerType</td>
+                                        <td>HourRangePickerType | null</td>
                                         <td>null</td>
                                         <td>
                                             <div>Value of the component.</div>
@@ -225,7 +229,7 @@
                                     <tr>
                                         <td>blockColor</td>
                                         <td>String</td>
-                                        <td>#2e2e2e</td>
+                                        <td>#333333</td>
                                         <td>
                                             <div>Background color of Hour blocks.</div>
                                         </td>
@@ -233,7 +237,7 @@
                                     <tr>
                                         <td>borderColor</td>
                                         <td>String</td>
-                                        <td>#eeeeee</td>
+                                        <td>#dfdfdf</td>
                                         <td>
                                             <div>Border color of Grids.</div>
                                         </td>
@@ -243,7 +247,8 @@
                                         <td>String</td>
                                         <td>1px</td>
                                         <td>
-                                            <div>Border width of Grids. CSS suppoerted unit for border-width.</div>
+                                            <div>Border width of Grids. CSS supported unit for border-width.</div>
+                                            <div>Forced to <strong>1px</strong> if the component's width is under <strong>500px</strong></div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -267,7 +272,10 @@
                                         <td>String</td>
                                         <td>null</td>
                                         <td>
-                                            <div>CSS supported font-size. If not present, it will auto render font size based on grid size.</div>
+                                            <div>CSS supported font-size.</div>
+                                            <div>If not present, it will auto render font size based on component width. Max is 14px.</div>
+                                            <div>If present in fixed unit, it won't change font-size based on component width or viewport.</div>
+                                            <div>If you want to control font-size responsiveness, you can set this value <strong>'100%'</strong>. Then you can set your font-size in component container with media queries to make it responsive.</div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -313,18 +321,68 @@
                                 <tbody>
                                     <tr>
                                         <td>update:modelValue</td>
-                                        <td>value: HourRangePickerType</td>
+                                        <td>value: HourRangePickerType | null</td>
                                         <td>void</td>
                                         <td>
                                             <div>Emitted when the value changes.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>selected</td>
+                                        <td>value: HourRangePickerType</td>
+                                        <td>void</td>
+                                        <td>
+                                            <div>Emitted after selecting new block or range.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>unselected</td>
+                                        <td>value: HourRangePickerType</td>
+                                        <td>void</td>
+                                        <td>
+                                            <div>Emitted after unselecting a block or range.</div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="py-4 border-bottom" ref="sectionTypes">
-                        <h5 class="title-2 mb-2">Emits:</h5>
+                    <div class="py-4 border-bottom" ref="sectionMethods">
+                        <h5 class="title-2 mb-2">Methods:</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Parameter</th>
+                                        <th>ReturnType</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>clear</td>
+                                        <td></td>
+                                        <td>Void</td>
+                                        <td>
+                                            <div>Clears the selector.</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>resize</td>
+                                        <td></td>
+                                        <td>Void</td>
+                                        <td>
+                                            <div>Resizes the component.</div>
+                                            <div>If component's width changes without Window resize event, this method can be used to re-render the component.</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="py-4 pb-5" ref="sectionTypes">
+                        <h5 class="title-2 mb-2">Types:</h5>
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
@@ -362,6 +420,7 @@
     import HourRangePicker from '../src/components/HourRangePicker.vue'
     import type { HourRangePickerType } from '../src/types/HourRangePickerType'
     import './style.scss'
+    import { useResizeObserver } from '@vueuse/core'
 
     const sideBarOpen = ref(false);
     const sectionIntroduction = ref();
@@ -370,8 +429,11 @@
     const sectionCustomColor = ref();
     const sectionCustomColorDark = ref();
     const sectionResponsive = ref();
+    const sectionResponsiveResizer = ref();
+    const componentResponsive = ref();
     const sectionProps = ref();
     const sectionEmits = ref();
+    const sectionMethods = ref();
     const sectionTypes = ref();
 
     const goTo = (e: any, el: any) => {
@@ -391,8 +453,8 @@
         sideBarOpen.value = false;
     }
 
-    let sectionImportHtml = `import { HourRangePicker, type HourRangePickerType } from 'vue-hour-range-picker'
-import 'vue-hour-range-picker/style.css'`;
+    let sectionImportHtml = `import { HourRangePicker, type HourRangePickerType } from 'vue-hour-range-picker';
+import 'vue-hour-range-picker/style.css';`;
 
     let sectionBasicHtml = `html:
     <HourRangePicker 
@@ -402,6 +464,10 @@ import 'vue-hour-range-picker/style.css'`;
     </HourRangePicker>
 
 js:
+    import { ref } from 'vue';
+    import { HourRangePicker, type HourRangePickerType } from 'vue-hour-range-picker';
+    import 'vue-hour-range-picker/style.css';
+
     const value1 = ref<HourRangePickerType>();
     const isDisabled = ref(false);
     const showNote = ref(true);
@@ -420,6 +486,10 @@ js:
     ></HourRangePicker>
 
 js:
+    import { ref } from 'vue';
+    import { HourRangePicker, type HourRangePickerType } from 'vue-hour-range-picker';
+    import 'vue-hour-range-picker/style.css';
+
     const value1 = ref<HourRangePickerType>();
     value1.value = {
         "tuesday": {
@@ -439,7 +509,7 @@ js:
             "10": true
         }
     };
-                            `;
+`;
     let sectionCustomColorDarkHtml = `html:
     <HourRangePicker 
         v-model="value1" 
@@ -453,6 +523,10 @@ js:
     </HourRangePicker>
 
 js:
+    import { ref } from 'vue';
+    import { HourRangePicker, type HourRangePickerType } from 'vue-hour-range-picker';
+    import 'vue-hour-range-picker/style.css';
+
     const value1 = ref<HourRangePickerType>();
     value1.value = {
         "monday":{
@@ -505,7 +579,34 @@ js:
             "16":true
         }
     };
-                            `;
+`;
+    let sectionResponsiveHtml = `html:
+    <label>
+        <input type="checkbox" v-model="autoResize" @input="componentResponsive.resize();"> 
+        <span @click="autoResize = !autoResize; componentResponsive.resize();">Auto Resize</span>
+    </label>
+    <div ref="sectionResponsiveResizer">
+        <HourRangePicker 
+            :add-note="false" 
+            borderWidth="4px" 
+            ref="componentResponsive">
+        </HourRangePicker>
+    </div>
+
+js:
+    import { ref } from 'vue';
+    import { HourRangePicker, type HourRangePickerType } from 'vue-hour-range-picker';
+    import 'vue-hour-range-picker/style.css';
+    import { useResizeObserver } from '@vueuse/core';
+    
+    const sectionResponsiveResizer = ref();
+    const autoResize = ref(true);
+    useResizeObserver(sectionResponsiveResizer, (entries) => {
+        if(componentResponsive.value && autoResize.value){
+            componentResponsive.value.resize();
+        }
+    })
+`;
 
     
 
@@ -584,4 +685,23 @@ js:
             "16":true
         }
     };
+
+    const autoResize = ref(true);
+    useResizeObserver(sectionResponsiveResizer, (entries) => {
+        const entry = entries[0]
+        const { width, height } = entry.contentRect
+        if(componentResponsive.value && autoResize.value){
+            componentResponsive.value.resize();
+        }
+    })
+
+    const updated = (e: any) => {
+        console.log('updated', e)
+    }
+    const unselected = (e: any) => {
+        console.log('unselected', e)
+    }
+    const selected = (e:any) => {
+        console.log('selected', e)
+    }
 </script>

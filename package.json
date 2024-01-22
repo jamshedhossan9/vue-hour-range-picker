@@ -4,8 +4,17 @@
     "version": "0.0.0",
     "homepage": "https://jamshedhossan9.github.io/vue-hour-range-picker/",
     "type": "module",
+    "bugs": {
+        "url": "https://github.com/jamshedhossan9/vue-hour-range-picker/issues",
+        "email": "jamshedhossan9@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jamshedhossan9/vue-hour-range-picker.git"
+    },
     "files": [
-        "dist"
+        "dist",
+        "src"
     ],
     "main": "./dist/hour-range-picker.umd.cjs",
     "module": "./dist/hour-range-picker.js",
@@ -25,8 +34,6 @@
         "types": "vue-tsc "
     },
     "dependencies": {
-        "bootstrap": "^5.3.2",
-        "sass": "^1.62.1",
         "vue": "^3.3.11"
     },
     "devDependencies": {
@@ -34,6 +41,9 @@
         "@vitejs/plugin-vue": "^4.5.2",
         "typescript": "^5.2.2",
         "vite": "^5.0.8",
-        "vue-tsc": "^1.8.25"
+        "vue-tsc": "^1.8.25",
+        "@vueuse/core": "^10.7.2",
+        "bootstrap": "^5.3.2",
+        "sass": "^1.62.1"
     }
 }

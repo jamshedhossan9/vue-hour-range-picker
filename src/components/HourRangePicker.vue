@@ -1,5 +1,5 @@
 <template>
-    <div class="hour-range-picker">
+    <div class="hour-range-picker" ref="hourRangePickerEl">
         <!-- @mouseout="mouseOutHandler" -->
         <table
             class="hour-range-picker-table"
@@ -19,8 +19,8 @@
             <tbody>
                 <tr>
                     <td :style="cellStyle(0, 0)" ref="firstCell" class="clear-icon-cell">
-                        <span class="clear-icon" v-if="!props.disabled" :style="{color: props.clearIconColor}">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="svg-icon">
+                        <span class="clear-icon" v-if="!props.disabled && hasSelectedHour" :style="{color: props.clearIconColor}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="svg-icon">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
                         </span>
@@ -28,7 +28,7 @@
                     <td v-for="i in 24" :key="i" :style="cellStyle(0, i)">
                         <span class="hour-name" :class="mutedHours[i-1] ? 'hour-muted' : ''" :style="labelStyle(mutedHours[i-1])">
                             <span class="hour-name-child">
-                                {{ i < 10 ? '0' + i : i }}
+                                {{ i-1 < 10 ? '0' + (i-1) : i-1 }}
                             </span>
                         </span>
                     </td>
@@ -54,7 +54,7 @@
                     >
                         <span :data-pos-i="i" :data-pos-j="j" class="hour-block" :style="{
                             backgroundColor: props.blockColor,
-                            borderBottomRightRadius: props.rounded && i == 6 && j == 23 ? props.rounded : 0,
+                            borderBottomRightRadius: i == 6 && j == 23 ? borderRadius : 0,
                         }">
                             <!-- <span class="hour-block-child"></span> -->
                         </span>
@@ -124,11 +124,11 @@ const props = defineProps({
     },
     blockColor:{
         type: String,
-        default: '#2e2e2e',
+        default: '#333333',
     },
     borderColor:{
         type: String,
-        default: '#eeeeee',
+        default: '#dfdfdf',
     },
     borderWidth:{
         type: String,
@@ -136,7 +136,7 @@ const props = defineProps({
     },
     rounded:{
         type: String,
-        default: '0px',
+        default: null,
     },
     clearIconColor:{
         type: String,
@@ -152,44 +152,41 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits([
+    'update:modelValue',
+    'selected',
+    'unselected',
+])
 
 // days: ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
 let weekdays: WeekType = [
     {
         key: 'monday',
         name: 'Monday',
-        muted: false
     },
     {
         key: 'tuesday',
         name: 'Tuesday',
-        muted: false
     },
     {
         key: 'wednesday',
         name: 'Wednesday',
-        muted: false
     },
     {
         key: 'thursday',
         name: 'Thursday',
-        muted: false
     },
     {
         key: 'friday',
         name: 'Friday',
-        muted: false
     },
     {
         key: 'saturday',
         name: 'Saturday',
-        muted: true
     },
     {
         key: 'sunday',
         name: 'Sunday',
-        muted: true
     }
 ]
 
@@ -227,6 +224,8 @@ const _parseInt = (num: string | number) => {
     return output
 }
 
+const hourRangePickerEl = ref();
+const hasSelectedHour = ref(false);
 const selectStartPos = ref()
 const timeTable = ref([...timeTableDefault])
 const mutedWeekDays = ref({ ...mutedWeekDaysDefault })
@@ -238,6 +237,7 @@ const mutedDaysHoursDefault = () => {
 }
 
 const modelValueToTimeTable = () => {
+    let tempHasSelectedHour: boolean = false;
     mutedDaysHoursDefault()
     if (props.modelValue) {
         for (const x in props.modelValue) {
@@ -250,6 +250,7 @@ const modelValueToTimeTable = () => {
                             if (hourIndex >= 0 && hourIndex <= 23) {
                                 timeTable.value[dayIndex][hourIndex].checked = props.modelValue[x][y]
                                 if (timeTable.value[dayIndex][hourIndex].checked) {
+                                    tempHasSelectedHour = true;
                                     mutedWeekDays.value[x] = false
                                     mutedHours.value[hourIndex] = false
                                 }
@@ -262,11 +263,13 @@ const modelValueToTimeTable = () => {
     } else {
         timeTable.value = [...timeTableDefault]
     }
+    hasSelectedHour.value = tempHasSelectedHour;
     // console.log(mutedWeekDays.value, mutedHours.value)
 }
 
 const timeTableToModelValue = () => {
     let tempModelValue: HourRangePickerType = {}
+    let tempHasSelectedHour: boolean = false;
     mutedDaysHoursDefault()
     for (let i = 0; i < timeTable.value.length; i++) {
         for (let j = 0; j < timeTable.value[i].length; j++) {
@@ -275,18 +278,20 @@ const timeTableToModelValue = () => {
                 if (typeof tempModelValue[day] === 'undefined') {
                     tempModelValue[day] = {}
                 }
+                tempHasSelectedHour = true;
                 tempModelValue[day][j] = true
                 mutedWeekDays.value[day] = false
                 mutedHours.value[j] = false
             }
         }
     }
-    emit('update:modelValue', tempModelValue)
+    hasSelectedHour.value = tempHasSelectedHour;
+    emit('update:modelValue', hasSelectedHour.value ? tempModelValue : null)
 }
 
 onMounted(() => {
     modelValueToTimeTable()
-    onResize();
+    resize();
 })
 
 watch(
@@ -312,39 +317,61 @@ const hourBlockClass = (item: any) => {
 const firstCell = ref();
 const fontSize = ref('100%');
 const borderWidth = ref(props.borderWidth);
+const borderRadius = ref('0px');
 
-const onResize = () => {
+const resize = () => {
     if(props.fontSize){
         fontSize.value = props.fontSize;
     }
-    if(firstCell.value){
-        let width: number = firstCell.value.offsetWidth;
+    if(hourRangePickerEl.value){
+        let width: number = hourRangePickerEl.value.offsetWidth;
         // console.log(width)
-        if(width > 30){
+        if(width > 500){
             borderWidth.value = props.borderWidth;
         }
         else{
             borderWidth.value = '1px';
         }
+        if(props.rounded){
+            if(width > 500){
+                borderRadius.value = props.rounded;
+            }
+            else if(width > 375){
+                borderRadius.value = '6px';
+            }
+            else{
+                borderRadius.value = '4px';
+            }
+        }
+        
         if(!props.fontSize){
             let tempFontSize = 4;
             // tempFontSize = width - 3;
-            if(width > 10){
+            if(width > 250){
                 tempFontSize = 5;
             }
-            if(width > 16){
+            if(width > 300){
                 tempFontSize = 6;
             }
-            if(width > 24){
+            if(width > 400){
+                tempFontSize = 7;
+            }
+            if(width > 500){
+                tempFontSize = 8;
+            }
+            if(width > 600){
                 tempFontSize = 9;
             }
-            if(width > 30){
+            if(width > 700){
+                tempFontSize = 10;
+            }
+            if(width > 800){
                 tempFontSize = 11;
             }
-            if(width > 35){
+            if(width > 900){
                 tempFontSize = 12;
             }
-            if(width > 40){
+            if(width > 1000){
                 tempFontSize = 14;
             }
             fontSize.value = `${tempFontSize}px`;
@@ -356,7 +383,7 @@ const onResize = () => {
         }
     }
 }
-window.addEventListener('resize', onResize)
+window.addEventListener('resize', resize)
 
 const cellStyle = (i: number, j: number) => {
     let style: any = {};
@@ -371,20 +398,19 @@ const cellStyle = (i: number, j: number) => {
         style.borderBottomWidth = borderWidth.value;
     }
     style.borderRadius = 0;
-    if(props.rounded){
-        if(i == 0 && j == 0){
-            style.borderTopLeftRadius = props.rounded;
-        }
-        if(i == 0 && j == 24){
-            style.borderTopRightRadius = props.rounded;
-        }
-        if(i == 7 && j == 0){
-            style.borderBottomLeftRadius = props.rounded;
-        }
-        if(i == 7 && j == 24){
-            style.borderBottomRightRadius = props.rounded;
-        }
+    if(i == 0 && j == 0){
+        style.borderTopLeftRadius = borderRadius.value;
     }
+    if(i == 0 && j == 24){
+        style.borderTopRightRadius = borderRadius.value;
+    }
+    if(i == 7 && j == 0){
+        style.borderBottomLeftRadius = borderRadius.value;
+    }
+    if(i == 7 && j == 24){
+        style.borderBottomRightRadius = borderRadius.value;
+    }
+    
     if(props.disabled){
         style.pointerEvents = 'none';
     }
@@ -401,15 +427,32 @@ const labelStyle = (muted: boolean = false) => {
 
 const clearTable = () => {
     // alert('here')
+    let changed: HourRangePickerType = { ...props.modelValue };
+    for(let i in changed){
+        if(changed.hasOwnProperty(i)){
+            for(let j in changed[i]){
+                if(changed[i].hasOwnProperty(j)){
+                    changed[i][j] = false;
+                }
+            }
+        }
+    }
+    
+    emit('unselected', changed)
     for (let i = 0; i < timeTable.value.length; i++) {
         for (let j = 0; j < timeTable.value[i].length; j++) {
             timeTable.value[i][j].checked = false
             timeTable.value[i][j].highlight = false
         }
     }
+    hasSelectedHour.value = false;
     mutedDaysHoursDefault()
     emit('update:modelValue', null)
     closeAction = false;
+}
+
+const clear = () => {
+    clearTable();
 }
 
 const checkOperation = (xy1param: any, xy2param: any) => {
@@ -432,10 +475,16 @@ const checkOperation = (xy1param: any, xy2param: any) => {
     }
 
     let check = !isAllChecked
+    let changed: HourRangePickerType = {};
     // console.log('check', check)
     for (let i = xy1.i; i <= xy2.i; i++) {
         for (let j = xy1.j; j <= xy2.j; j++) {
             timeTable.value[i][j].checked = check
+            const day = weekdays[i].key;
+            if(typeof changed[day] === "undefined"){
+                changed[day] = {};
+            }
+            changed[day][j] = check;
         }
     }
     for (let i = 0; i < timeTable.value.length; i++) {
@@ -445,6 +494,12 @@ const checkOperation = (xy1param: any, xy2param: any) => {
     }
     timeTableToModelValue()
     selectStartPos.value = null
+    if(check){
+        emit('selected', changed)
+    }
+    else{
+        emit('unselected', changed)
+    }
     // highlightOperation();
 }
 
@@ -502,7 +557,7 @@ const mouseDownHandler = (event: any) => {
     if(props.disabled){
         return;
     }
-    console.log(event)
+    // console.log(event)
     if(event.which && event.which != 1){
         return;
     }
@@ -529,7 +584,7 @@ const mouseUpHandler = (event: any) => {
     if(props.disabled){
         return;
     }
-    console.log(event)
+    // console.log(event)
     let block = getTouchMouseTargetElement(event); //event.target
     if (closeAction && block && block.closest('.clear-icon')) {
         clearTable();
@@ -561,6 +616,11 @@ const mouseMoveHandler = (event: any) => {
     }
 }
 
+defineExpose({
+    clear,
+    resize
+})
+
 </script>
 
 <style scoped lang="scss">
@@ -575,7 +635,7 @@ const mouseMoveHandler = (event: any) => {
         width: 100%;
         border-spacing: 0px;
         border-collapse: separate;
-        font-size: 14px;
+        font-size: 100%;
 
         $borderWidth: 2px;
         $borderRadius: 0.375rem;
