@@ -6,8 +6,7 @@ It is currently compatible with **Vue3** only.
 
 
 <p align="center">
-    <img src="https://github.com/jamshedhossan9/vue-hour-range-picker/blob/main/screenshots/vue-hour-range-picker-light.png?raw=true" width="400" > &nbsp; &nbsp;
-    <img src="https://github.com/jamshedhossan9/vue-hour-range-picker/blob/main/screenshots/vue-hour-range-picker-dark.png?raw=true" width="400" >
+<img src="https://github.com/jamshedhossan9/vue-hour-range-picker/blob/main/screenshots/vue-hour-range-picker-light.png?raw=true" width="400" > <img src="https://github.com/jamshedhossan9/vue-hour-range-picker/blob/main/screenshots/vue-hour-range-picker-dark.png?raw=true" width="400" >
 </p>
 
 ### Installation
